@@ -10,9 +10,14 @@ class Produto(models.Model):
     # Nós vamos ter o nosso próprio save() que faz questão de criar um Estoque
     # caso esse estoque não exista previamente!
     def save(self, *args, **kwargs):
-        if self.id == None: # Ops, esse tipo de Produto não existia previamente!!
-            pass
+        id_anterior = self.id
         super().save(*args, **kwargs)  # Call the "real" save() method.
+
+        # Ops, esse tipo de Produto não existia previamente!!
+        if id_anterior == None:
+            novo_estoque = Estoque(produto_id=self, estoque=0)
+            novo_estoque.save()
+
 
     def __str__(self):
         return ('<Produto #{}. Tipo: "{}", categoria: "{}">'
@@ -21,7 +26,7 @@ class Produto(models.Model):
 
 # veja: https://docs.djangoproject.com/en/2.2/topics/db/models/#fields
 class Entrada(models.Model):
-    produto_id = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    produto_id = models.ForeignKey(Produto, on_delete=models.CASCADE, unique=False)
     quantidade = models.IntegerField()
 
     def __str__(self):
