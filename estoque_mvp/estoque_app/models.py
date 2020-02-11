@@ -14,14 +14,29 @@ class Produto(models.Model):
             pass
         super().save(*args, **kwargs)  # Call the "real" save() method.
 
+    def __str__(self):
+        return ('<Produto #{}. Tipo: "{}", categoria: "{}">'
+                .format(self.id, self.tipo, self.categoria))
+
 
 # veja: https://docs.djangoproject.com/en/2.2/topics/db/models/#fields
 class Entrada(models.Model):
     produto_id = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
 
+    def __str__(self):
+        return ('<Entrada #{} para "{}", qtd: {}>'
+                .format(self.id,
+                        Produto.objects.get(pk=self.produto_id),
+                        quantidade))
+
 
 class Estoque(models.Model):
     produto_id = models.ForeignKey(Produto, on_delete=models.CASCADE,
                                    primary_key=True)
     estoque = models.IntegerField(default=0)
+
+    def __str__(self):
+        return ('<Estoque #{} para "{}": {}>'
+                .format(self.id, Produto.objects.get(pk=self.produto_id),
+                        self.estoque))
