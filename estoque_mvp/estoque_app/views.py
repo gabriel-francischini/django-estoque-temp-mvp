@@ -38,4 +38,13 @@ def ver_tabelas(request):
     return render(request, 'estoque_app/ver_tabelas.html', context)
 
 def contabilizar(request):
+    for entrada in Entrada.objects.all():
+        print(entrada)
+        print(entrada.produto_id)
+        print(entrada.produto_id.id)
+        estoque = Estoque.objects.get(produto_id=entrada.produto_id.id)
+        estoque.estoque += entrada.quantidade
+
+        # Somente salve um se o outro for deletado, e vice-versa
+        _, __ = estoque.save(), entrada.delete()
     return django.http.HttpResponseRedirect('/ver_tabelas')
