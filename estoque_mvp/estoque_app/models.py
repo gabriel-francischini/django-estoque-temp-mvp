@@ -32,8 +32,8 @@ class Entrada(models.Model):
     def __str__(self):
         return ('<Entrada #{} para "{}", qtd: {}>'
                 .format(self.id,
-                        Produto.objects.get(pk=self.produto_id),
-                        quantidade))
+                        Produto.objects.get(pk=self.produto_id.id),
+                        self.quantidade))
 
 
 class Estoque(models.Model):
@@ -43,5 +43,6 @@ class Estoque(models.Model):
 
     def __str__(self):
         return ('<Estoque #{} para "{}": {}>'
-                .format(self.id, Produto.objects.get(pk=self.produto_id),
+                .format(self.produto_id.id,
+                        Produto.objects.get(pk=self.produto_id.id),
                         self.estoque))
