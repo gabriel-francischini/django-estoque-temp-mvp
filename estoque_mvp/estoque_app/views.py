@@ -2,7 +2,7 @@ from django.shortcuts import render
 import django.http
 
 # Create your views here.
-#from .models import Question
+from .models import Produto, Entrada, Estoque
 
 
 def index(request):
@@ -10,21 +10,32 @@ def index(request):
 
 
 def add_entrada(request):
-    return django.http.HttpResponseRedirect('/')
+    nova_entrada = Entrada(produto_id=Produto.objects.get(pk=request.GET['produto']),
+                           quantidade=request.GET['qtd'])
+    nova_entrada.save()
+    return django.http.HttpResponseRedirect('/ver_tabelas')
 
 def add_entrada_form(request):
-    return django.http.HttpResponseRedirect('/')
+    context = {'produtos': Produto.objects.all()}
+    print(context)
+    return render(request, 'estoque_app/entrada_form.html', context)
 
 
 def add_produto(request):
-    return django.http.HttpResponseRedirect('/')
+    novo_produto = Produto(tipo=request.GET['tipo'],
+                           categoria=request.GET['categoria'])
+    novo_produto.save()
+    return django.http.HttpResponseRedirect('/ver_tabelas')
 
 def add_produto_form(request):
-    return django.http.HttpResponseRedirect('/')
+    return render(request, 'estoque_app/produto_form.html')
 
 
 def ver_tabelas(request):
-    return django.http.HttpResponseRedirect('/')
+    context = {'produtos': Produto.objects.all(),
+               'entradas': Entrada.objects.all(),
+               'estoques': Estoque.objects.all()}
+    return render(request, 'estoque_app/ver_tabelas.html', context)
 
 def contabilizar(request):
-    return django.http.HttpResponseRedirect('/')
+    return django.http.HttpResponseRedirect('/ver_tabelas')

@@ -1,0 +1,107 @@
+<!doctype html>
+
+<html lang="pt_BR">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>Estoque | Index</title>
+    <meta name="description" content="Um MVP de um Estoque"/>
+
+
+    <!-- Sempre use bootstrap para poder minimizar o tempo de prototipação -->
+    <!-- Veja https://getbootstrap.com/docs/4.4/getting-started/introduction/ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+  </head>
+
+  <body>
+
+    <!-- veja: https://stackoverflow.com/a/46298729/6141224 -->
+    <section class="h-100">
+      <header class="container h-100">
+        <div class="d-flex align-items-center justify-content-center h-100">
+          <div class="d-flex flex-column">
+            <div class="align-self-center p-2">
+              <a href="/add_entrada_form" class="text btn btn-primary align-self-center p-2">Adicionar Entrada</a>
+              <a href="/add_produto_form" class="text btn btn-secondary active align-self-center p-2">Adicionar Produto</a>
+              <a href="/ver_tabelas" class="text btn btn-info align-self-center p-2">Ver Tabelas</a>
+              <a href="/contabilizar" class="text btn btn-danger align-self-center p-2">Contabilizar</a>
+            </div>
+            <div class="align-self-center p-2">
+              <h2 class="text-center align-self-center p-2" style="width:100%;">Produtos</h2>
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Categoria</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for produto in produtos %}
+                  <tr>
+                    <th scope="row">{{ produto.id }}</th>
+                    <td>{{ produto.tipo }}</td>
+                    <td>{{ produto.categoria }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <hr/>
+            </div>
+            <div class="align-self-center p-2">
+              <h2 class="text-center align-self-center p-2" style="width:100%;">Entradas</h2>
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Produto.Id</th>
+                    <th scope="col">Quantidade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for entrada in entradas %}
+                  <tr>
+                    <th scope="row">{{ entrada.id }}</th>
+                    <td>{{ entrada.produto_id.id }}</td>
+                    <td>{{ entrada.quantidade }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <hr/>
+            </div>
+            <div class="align-self-center p-2">
+              <h2 class="text-center align-self-center p-2" style="width:100%;">Estoques</h2>
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Produto.Id</th>
+                    <th scope="col">Estoque</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for estoque in estoques %}
+                  <tr>
+                    <th scope="row">{{ estoque.produto_id.id }}</th>
+                    <td>{{ estoque.estoque }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <hr/>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
